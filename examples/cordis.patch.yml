@@ -3,4 +3,4 @@
 # mount the plugin by hand in a profile patch.
 - insert:
     - id: zpdf
-      name: '@kolmopdf/dsh-zpdf'
+      name: '@nguyenvanhoang1/dsh-zpdf'
