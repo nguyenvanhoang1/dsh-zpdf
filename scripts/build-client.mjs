@@ -49,7 +49,7 @@ await build({
     // harness exactly like the shipped 0.1.1-rc.2 bundles (dsh-client-ui-theme).
     // The registration id must match the boot-graph row id, which is the
     // package name.
-    js: 'window.__ModuleLoader__.load({ id: "@kolmopdf/dsh-zpdf", factory: (require) => {\n"use strict";\nvar module = { exports: {} };\nvar exports = module.exports;\nObject.defineProperty(exports, Symbol.toStringTag, { value: "Module" });',
+    js: 'window.__ModuleLoader__.load({ id: "@nguyenvanhoang1/dsh-zpdf", factory: (require) => {\n"use strict";\nvar module = { exports: {} };\nvar exports = module.exports;\nObject.defineProperty(exports, Symbol.toStringTag, { value: "Module" });',
   },
   footer: {
     js: "\nreturn module.exports;\n} });",

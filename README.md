@@ -4,7 +4,7 @@ English | [中文](README.zh.md)
 
 ZPDF tools for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness): high-fidelity PDF→Markdown parsing, layout-preserving PDF translation, Markdown conversion, credit estimates, and balance checks.
 
-Repository: <https://github.com/komoai2026/dsh-zpdf>
+Repository: <https://github.com/nguyenvanhoang1/dsh-zpdf>
 
 ## Features
 
@@ -36,22 +36,19 @@ Install the package into the DSH profile you use (example: `web`). GitHub is the
 
 ```bash
 # From GitHub (recommended; no npm publish required)
-dsh plugin --profile web add github:komoai2026/dsh-zpdf
+dsh plugin --profile web add github:nguyenvanhoang1/dsh-zpdf
 
 # Equivalent
-dsh plugin --profile web add https://github.com/komoai2026/dsh-zpdf.git
+dsh plugin --profile web add https://github.com/nguyenvanhoang1/dsh-zpdf.git
 ```
 
-This is a git dependency that ships prebuilt `lib/` (no `prepare` script, so `dsh plugin add` does not hit pnpm `allowBuilds`). The package also declares `dsh.bundle`, so `dsh plugin add` appends `@kolmopdf/dsh-zpdf` to the profile's `dsh.profile.bundles` and the plugin mounts on the next start — settings page and tools appear without a hand-written composition row.
+This is a git dependency that ships prebuilt `lib/` (no `prepare` script, so `dsh plugin add` does not hit pnpm `allowBuilds`). The package also declares `dsh.bundle`, so `dsh plugin add` appends `@nguyenvanhoang1/dsh-zpdf` to the profile's `dsh.profile.bundles` and the plugin mounts on the next start — settings page and tools appear without a hand-written composition row.
 
 Host packages such as `@deepseek-ai/dsh-tools` are **optional peer** dependencies (same pattern as [dsh-ads](https://github.com/Nagi-ovo/dsh-ads)): every host peer is marked optional in `peerDependenciesMeta`, so pnpm never reports "missing peer" at install time, while the runtime contract still requires them to resolve to the running Harness copy (module fallback stack). Shipping a second copy inside this plugin makes every tool call fail with `Cannot read properties of undefined (reading 'prepare')`.
 
-Other install sources:
+For local development:
 
 ```bash
-# From the npm registry
-dsh plugin --profile web add @kolmopdf/dsh-zpdf
-
 # Local checkout
 dsh plugin --profile web add D:/code/work-relate/dsh-zpdf
 ```
@@ -61,22 +58,16 @@ dsh plugin --profile web add D:/code/work-relate/dsh-zpdf
 ```yaml
 - insert:
     - id: zpdf
-      name: '@kolmopdf/dsh-zpdf'
+      name: '@nguyenvanhoang1/dsh-zpdf'
 ```
 
 ## Publishing
 
-One `Release & Publish` workflow (`.github/workflows/release.yml`) handles the pipeline end to end:
+npm publishing is paused. Install from GitHub using the commands above; the new package name is `@nguyenvanhoang1/dsh-zpdf` and its npm scope has not been configured for publishing.
 
-- **Change `version` in `package.json` and push to `main`** — the workflow compares it with the latest `v*` tag, creates `v<version>` on the bump commit and pushes it, then publishes in the same run. The tag push uses the internal token, which does not re-trigger the push event, so the same run continues straight into publishing. A push that does not change the version is a green no-op.
-- Manually pushing a matching tag works too: `git tag v1.0.0 && git push origin v1.0.0` releases exactly that tag. The tag must equal `package.json` version exactly, or the job fails.
-- Prerelease versions (`-` in the version) publish under the `next` dist-tag, stable versions under `latest`.
-- Publishing uses **pnpm** (`pnpm publish`) with **npm trusted publishing** (OpenID Connect): the workflow holds `id-token: write`, npm exchanges the GitHub Actions ID token for a short-lived token bound to this workflow file, and provenance attestations are generated automatically (`--provenance`). **No `NPM_TOKEN` secret is used.**
-- `pnpm publish` runs `pnpm check` first (each publish packs a freshly built `lib/`), then a GitHub Release is created with generated notes.
-- The `Rebuild lib` workflow keeps the committed `lib/` in sync with `src/` on every push to `main` (git installs never run prepare scripts).
-- `CI` workflow typechecks, tests, and builds on every PR and push to main.
+Before enabling `Release & Publish` (`.github/workflows/release.yml`), establish npm publishing access for this scope and configure npm Trusted Publishing for owner `nguyenvanhoang1`, repository `dsh-zpdf`, and workflow `release.yml`. The workflow uses OIDC, not an `NPM_TOKEN` secret. Previously published npm packages are not changed by this repository migration.
 
-One-time setup: on npmjs.com open `@kolmopdf/dsh-zpdf` → Settings → Trusted publishing and authorize GitHub Actions (`.github/workflows/release.yml`) for this repository (public repo; publishing requires `@kolmopdf` scope access). The `npm trust` CLI can create the publisher too. With trusted publishing in place you can revoke the package's automation token — the workflow never sends one.
+`CI` runs typechecks, tests, and builds. `Rebuild lib` keeps committed `lib/` artifacts in sync for Git installations, which do not run prepare scripts.
 
 See [`examples/cordis.patch.yml`](examples/cordis.patch.yml) and the package-root [`cordis.patch.yml`](cordis.patch.yml).
 
@@ -158,7 +149,7 @@ Composition `config` is the base layer; the user settings document still overrid
 ```yaml
 - insert:
     - id: zpdf
-      name: '@kolmopdf/dsh-zpdf'
+      name: '@nguyenvanhoang1/dsh-zpdf'
       config:
         outputDir: ./zpdf-output
         pollIntervalMs: 2000

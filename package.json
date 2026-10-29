@@ -1,5 +1,5 @@
 {
-  "name": "@kolmopdf/dsh-zpdf",
+  "name": "@nguyenvanhoang1/dsh-zpdf",
   "version": "1.0.5",
   "description": "ZPDF tools for DeepSeek Harness with durable API-key settings and CLI configuration.",
   "type": "module",
@@ -135,11 +135,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/komoai2026/dsh-zpdf.git"
+    "url": "git+https://github.com/nguyenvanhoang1/dsh-zpdf.git"
   },
-  "homepage": "https://github.com/komoai2026/dsh-zpdf#readme",
+  "homepage": "https://github.com/nguyenvanhoang1/dsh-zpdf#readme",
   "bugs": {
-    "url": "https://github.com/komoai2026/dsh-zpdf/issues"
+    "url": "https://github.com/nguyenvanhoang1/dsh-zpdf/issues"
   },
   "publishConfig": {
     "access": "public"
